@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FinSight AI — Financial Analyst Assistant</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <div class="page-bg">
+    <div class="gradient-circle circle-1"></div>
+    <div class="gradient-circle circle-2"></div>
+    <div class="gradient-circle circle-3"></div>
+  </div>
+
+  <main class="app-container">
+    <section class="hero-section">
+      <div class="badge">
+        📈 FinSight AI — LangGraph, Alpha Vantage MCP, Supervisor & HITL
+      </div>
+      <h1>Institutional-Grade Financial Analysis</h1>
+      <p>
+        Analyze stock quotes, examine income statements & balance sheets, 
+        evaluate market sentiment, and review AI draft reports before final publication.
+      </p>
+    </section>
+
+    <section class="planner-card">
+      <div class="card-header">
+        <div>
+          <h2>What stock or company would you like to analyze?</h2>
+          <p>
+            Example: Provide a complete financial health and valuation report for Tesla (TSL A).
+          </p>
+        </div>
+        <div class="status-pill">
+          <span class="status-dot"></span>
+          Live Market Online
+        </div>
+      </div>
+
+      <div class="input-area">
+        <textarea
+          id="userInput"
+          placeholder="Analyze Apple (AAPL) stock performance, balance sheet health, and market sentiment..."
+        ></textarea>
+        <button id="sendBtn" onclick="sendMessage()">
+          <span id="btnText">Generate Report</span>
+          <span id="btnLoader" class="loader hidden"></span>
+        </button>
+      </div>
+
+      <div class="quick-prompts">
+        <button onclick="setPrompt('Analyze Tesla (TSLA) stock quotes, balance sheet, and investment outlook.')">
+          Tesla (TSLA)
+        </button>
+        <button onclick="setPrompt('Provide a deep financial and fundamental analysis of Apple (AAPL).')">
+          Apple (AAPL)
+        </button>
+        <button onclick="setPrompt('Evaluate Microsoft (MSFT) earnings, income statements, and market valuation.')">
+          Microsoft (MSFT)
+        </button>
+        <button onclick="setPrompt('Check NVIDIA (NVDA) stock pricing, sentiment, and financial fundamentals.')">
+          NVIDIA (NVDA)
+        </button>
+      </div>
+    </section>
+
+    <section id="workflowSection" class="workflow-section hidden">
+      <div class="workflow-header">
+        <div>
+          <span class="eyebrow">Supervisor Agent</span>
+          <h2>Execution Routing Plan</h2>
+        </div>
+        <span id="guardrailBadge" class="guardrail-badge">Guardrail passed</span>
+      </div>
+      <p id="supervisorReasoning" class="supervisor-reasoning"></p>
+      <div id="agentChips" class="agent-chips"></div>
+    </section>
+
+    <section id="resultSection" class="result-section hidden">
+      <div class="result-header">
+        <div>
+          <h2 id="resultTitle">Financial Analysis Report</h2>
+          <p id="threadInfo">Thread ID: -</p>
+        </div>
+        <div class="result-actions">
+          <button class="copy-btn" onclick="copyResult()">Copy</button>
+          <button class="download-btn" onclick="downloadPDF()">Download PDF</button>
+        </div>
+      </div>
+
+      <div id="pdfContent" class="pdf-content">
+        <h1 class="pdf-title">FinSight AI Report</h1>
+        <div id="resultBox" class="result-box"></div>
+      </div>
+    </section>
+
+    <section id="approvalSection" class="approval-section hidden">
+      <div class="approval-icon">📊</div>
+      <div class="approval-content">
+        <span class="eyebrow">Human-in-the-Loop</span>
+        <h2>Review Financial Draft</h2>
+        <p id="approvalRequest">
+          Approve the analysis draft or provide notes for revision before final compilation.
+        </p>
+
+        <textarea
+          id="approvalFeedback"
+          class="feedback-input"
+          placeholder="Add revision notes, e.g.: focus more on debt-to-equity ratio or adjust growth outlook..."
+        ></textarea>
+
+        <div class="approval-actions">
+          <button id="approveBtn" class="approve-btn" onclick="submitApproval(true)">
+            Approve & Generate Final Report
+          </button>
+          <button id="reviseBtn" class="revise-btn" onclick="submitApproval(false)">
+            Revise Using Feedback
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section id="errorBox" class="error-box hidden"></section>
+  </main>
+
+  <footer>
+    Built with FastAPI, LangGraph, Groq, PostgreSQL, Tavily, Alpha Vantage MCP & Custom Adapters
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <script src="/static/script.js"></script>
+</body>
+</html>
